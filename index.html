@@ -15,6 +15,7 @@
 
 <body>
     <div id="controls">
+        <button id="hide-controls-btn" style="float:right; margin-bottom:5px;">X</button>
         <div>
             Añadir Marcador para: <span id="modo">Amigo</span>
         </div>
@@ -25,7 +26,22 @@
         <p>Click para eliminar un marcador</p>
         <div id="graph-legend" style="margin-top:10px;"></div>
     </div>
+    <button id="show-controls-btn"
+        style="display:none; position:absolute; top:10px; left:10px; z-index:10;">&equiv;</button>
     <div id="map"></div>
+    <script>
+        const controls = document.getElementById('controls');
+        const hideBtn = document.getElementById('hide-controls-btn');
+        const showBtn = document.getElementById('show-controls-btn');
+        hideBtn.onclick = function () {
+            controls.classList.add('hidden');
+            showBtn.style.display = 'block';
+        };
+        showBtn.onclick = function () {
+            controls.classList.remove('hidden');
+            showBtn.style.display = 'none';
+        };
+    </script>
 </body>
 
 </html>
