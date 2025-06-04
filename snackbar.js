@@ -1,4 +1,4 @@
-function showSnackbar(message, persistent = true, onClick = () => { }) {
+function showSnackbar(message, persistent = false, onClick = () => { }) {
     let timeoutId;
     const snackbar = document.createElement('div');
     snackbar.className = 'snackbar';
