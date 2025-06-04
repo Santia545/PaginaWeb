@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Punto Medio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?q=20.702429413690165,-103.38830200488759&callback=initMap&libraries=marker"></script>
+    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_JS_API_KEY&callback=initMap"></script> -->
+</head>
+
+<body>
+    <div id="controls">
+        <div>
+            Añadir Marcador para: <span id="modo">Amigo</span>
+        </div>
+        <button onclick="cambiarModo('amigo')">Añadir Amigo</button>
+        <button onclick="cambiarModo('lugar')">Añadir Lugar</button>
+        <button onclick="findBestLocation()">Encontrar Mejor Lugar</button>
+        <button onclick="displayGraph()">Mostrar Grafo</button>
+        <p>Click para eliminar un marcador</p>
+        <div id="graph-legend" style="margin-top:10px;"></div>
+    </div>
+    <div id="map"></div>
+</body>
+
+</html>
