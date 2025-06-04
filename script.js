@@ -57,14 +57,27 @@ function addMarker(position) {
     });
     marker._customId = markerId;
 
-    marker.addListener("click", () => {
-        marker.position = null;
-        removeMarker(marker);
+    let wasDragged = false;
+
+    marker.addListener("dragstart", () => {
+        wasDragged = true;
     });
 
     marker.addListener("dragend", () => {
         clearGraph();
+        setTimeout(() => { wasDragged = false; }, 100); // reset after drag
     });
+
+    // Remove marker on click or touchend if not dragged
+    function handleRemove() {
+        if (!wasDragged) {
+            marker.position = null;
+            removeMarker(marker);
+        }
+    }
+
+    marker.addListener("click", handleRemove);
+    marker.addEventListener("touchend", handleRemove);
 
     if (mode === "amigo") {
         marcadoresAmigos.push(marker);
