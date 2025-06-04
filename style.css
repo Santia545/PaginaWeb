@@ -25,3 +25,65 @@
      border-radius: 4px;
      cursor: pointer;
  }
+
+ /* Snackbar Styles */
+ .snackbar {
+     visibility: hidden;
+     min-width: 250px;
+     background-color: #333;
+     color: #fff;
+     text-align: center;
+     border-radius: 2px;
+     padding: 16px;
+     position: fixed;
+     z-index: 202;
+     right: 30px;
+     bottom: 30px;
+     font-size: 17px;
+ }
+
+ .snackbar.show {
+     visibility: visible;
+     animation: fadein 0.5s, fadeout 0.8s 2.5s;
+ }
+
+ .snackbar.show-persistent {
+     visibility: visible;
+     animation: fadein 0.5s;
+ }
+
+
+ @keyframes fadein {
+     from {
+         bottom: 0;
+         opacity: 0;
+     }
+
+     to {
+         bottom: 30px;
+         opacity: 1;
+     }
+ }
+
+ @keyframes fadeout {
+     from {
+         bottom: 30px;
+         opacity: 1;
+     }
+
+     to {
+         bottom: 0;
+         opacity: 0;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .snackbar {
+         background-color: #fff;
+         min-width: 0;
+         width: 90vw;
+         left: 50%;
+         transform: translateX(-50%);
+         bottom: 30px;
+     }
+ }

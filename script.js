@@ -1,3 +1,4 @@
+import { showSnackbar } from './snackbar.js';
 let map;
 const marcadoresAmigos = [];
 const marcadoresLugares = [];
@@ -85,8 +86,9 @@ function cambiarModo(newMode) {
 }
 
 async function findBestLocation() {
+    showSnackbar("Cargando...");
     if (marcadoresAmigos.length === 0 || marcadoresLugares.length === 0) {
-        alert("Agrega al menos una direccion para amigos y una direccion para lugares de quedada");
+        showSnackbar("Agrega al menos una direccion para amigos y una direccion para lugares de quedada");
         return;
     }
 
@@ -107,7 +109,7 @@ async function findBestLocation() {
             body: JSON.stringify({ friends: amigos, candidates: lugares }),
         });
         if (!res.ok) {
-            alert("Error calculando la mejor: " + (await res.text()));
+            showSnackbar("Error calculando la mejor: " + (await res.text()));
             return;
         }
         const data = await res.json();
@@ -115,7 +117,7 @@ async function findBestLocation() {
         graph = data.graph;
         console.log("Ranking:", data.ranking);
     } catch (ex) {
-        alert("Error fetching the best location...");
+        showSnackbar("Error fetching the best location...");
         return;
     }
 }
@@ -138,7 +140,7 @@ function highlightBest(best) {
         iconImg.style.height = "32px";
         lugar.content = iconImg;
         map.panTo(lugar.position);
-        alert("Best hangout spot selected!");
+        showSnackbar("Lugar mas optimo calculado!!");
     }
 }
 
@@ -152,7 +154,7 @@ function displayGraph() {
         return;
     }
     if (!graph) {
-        alert("Primero ejecuta 'Encontrar Mejor Lugar'");
+        showSnackbar("Error, Primero ejecuta 'Encontrar Mejor Lugar'");
         return;
     }
     const nodeMarkers = [...marcadoresAmigos, ...marcadoresLugares];
@@ -194,3 +196,12 @@ function displayGraph() {
     document.getElementById("graph-legend").innerHTML =
         `<span style="color:#FF0000;">—</span> Aristas del grafo (${edgeCount})`;
 }
+
+Object.assign(window, {
+    initMap
+    , cambiarModo
+    , findBestLocation
+    , displayGraph
+});
+
+
