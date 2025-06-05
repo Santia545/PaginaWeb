@@ -1,4 +1,3 @@
-import { showSnackbar } from './snackbar.js';
 let map;
 const marcadoresAmigos = [];
 const marcadoresLugares = [];
@@ -88,9 +87,10 @@ function addMarker(position) {
 
 function removeMarker(marker) {
     clearGraph();
-    const arr = mode === "amigo" ? marcadoresAmigos : marcadoresLugares;
-    const idx = arr.indexOf(marker);
-    if (idx > -1) arr.splice(idx, 1);
+    let idx = marcadoresAmigos.indexOf(marker);
+    if (idx > -1) marcadoresAmigos.splice(idx, 1);
+    idx = marcadoresLugares.indexOf(marker);
+    if (idx > -1) marcadoresLugares.splice(idx, 1);
 }
 
 function cambiarModo(newMode) {
@@ -210,11 +210,31 @@ function displayGraph() {
         `<span style="color:#FF0000;">—</span> Aristas del grafo (${edgeCount})`;
 }
 
-Object.assign(window, {
-    initMap
-    , cambiarModo
-    , findBestLocation
-    , displayGraph
-});
+function showSnackbar(message, persistent = false, onClick = () => { }) {
+    let timeoutId;
+    const snackbar = document.createElement('div');
+    snackbar.className = 'snackbar';
+    snackbar.textContent = message;
+    snackbar.addEventListener('click', () => {
+        document.body.removeChild(snackbar);
+        if (!persistent && timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        onClick();
+    });
+    document.body.appendChild(snackbar);
 
 
+    if (persistent) {
+        snackbar.className = 'snackbar show-persistent';
+        return;
+    }
+    snackbar.className = 'snackbar show';
+
+    timeoutId = setTimeout(() => {
+        snackbar.className = 'snackbar';
+        setTimeout(() => {
+            document.body.removeChild(snackbar);
+        }, 500);
+    }, 3000);
+}
