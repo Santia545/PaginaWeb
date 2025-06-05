@@ -128,6 +128,29 @@ async function findBestLocation() {
         const data = await res.json();
         highlightBest(data.best);
         graph = data.graph;
+        data.ranking.forEach((item, idx) => {
+            const labelDiv = document.createElement("div");
+            labelDiv.style.background = "white";
+            labelDiv.style.border = "2px solid #333";
+            labelDiv.style.borderRadius = "50%";
+            labelDiv.style.width = "32px";
+            labelDiv.style.height = "32px";
+            labelDiv.style.display = "flex";
+            labelDiv.style.alignItems = "center";
+            labelDiv.style.justifyContent = "center";
+            labelDiv.style.fontWeight = "bold";
+            labelDiv.style.fontSize = "18px";
+            labelDiv.textContent = `${idx + 1}`;
+
+            const marker = new google.maps.marker.AdvancedMarkerElement({
+                position: { lat: item.lat, lng: item.lng },
+                map,
+                content: labelDiv,
+                gmpClickable: false,
+                gmpDraggable: false,
+            });
+            setInterval(() => { marker.setMap(null); }, 1000); // Remove marker after 5 seconds
+        });
         console.log("Ranking:", data.ranking);
     } catch (ex) {
         showSnackbar("Error fetching the best location...");
