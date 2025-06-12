@@ -32,7 +32,7 @@ Puedes desplegar la página en cualquier servicio de hosting estático (por ejem
 
 - Necesitas una clave de API de Google Maps para que el mapa funcione correctamente.
 - La página se comunica con la API de  Flask para los cálculos, asegúrate de que la API esté accesible.
-[text](https://github.com/Santia545/FlaskApi)
+[Link](https://github.com/Santia545/FlaskApi)
 
 ## Autor
 
